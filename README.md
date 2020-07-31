@@ -1,12 +1,14 @@
 # compact-cv-template
 This is a LaTeX template to create a compact curriculum vitae (CV) such as the one shown at [http://www.mit.edu/~wsshin/pdf/shin_cv.pdf](http://www.mit.edu/~wsshin/pdf/shin_cv.pdf).  
 
-## What you need to change
-In `cv.tex`:
+## How to use
+Put `cv.tex`, `cv_geoemtry.tex`, `cv_biblatex_format.tex` in the same directory.  Then, change the followings in `cv.tex`:
 - Definitions (`\def`) in "Personal information" section
 - Main contents within `\begin{document} ... \end{document}`
 
-In addition, if you want to include your publications, you need to provide your own `publications.bib` file (see below for additional information).
+Additionally, if you want to include your publications, you need to provide your own `publications.bib` file (see below for additional information).
+
+Finally, use `pdflatex` to process the `*.tex` files and produce `cv.pdf`.
 
 ## About `publications.bib`
 I made a great effort to list publications automatically out of a BibTeX file.
