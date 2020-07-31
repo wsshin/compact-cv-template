@@ -18,4 +18,4 @@ I made a great effort to list publications automatically out of a BibTeX file.
 In each section, the first subsection title needs to be defined in `\subsectionone{...}` for a formatting reason.  The remaining subsection titles need to be defined in the usual `\subsection{...}`.  A pull request to eliminate the need for the special subsection command for first subsections is welcome.
 
 ## About fonts
-I personally use the Minion Pro font, because it is a relatively narrow-width font and therefore I can put more contents with it.  Howevwer, the Minion Pro font is proprietary (even though it comes with Adobe Acrobat).  Even if you have Adobe Acrobat, you need to install the `minionpro` package (https://ctan.org/pkg/minionpro?lang=en), which I found tricky.
+I personally use the Minion Pro font, because it is a relatively narrow-width font and therefore I can put more contents with it.  However, the Minion Pro font is proprietary (even though it comes with Adobe Acrobat).  Even if you have Adobe Acrobat, you need to install the `minionpro` package (https://ctan.org/pkg/minionpro?lang=en), which I found tricky.
