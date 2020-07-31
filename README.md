@@ -2,9 +2,11 @@
 This is a LaTeX template to create a compact curriculum vitae (CV) such as the one shown at [http://www.mit.edu/~wsshin/pdf/shin_cv.pdf](http://www.mit.edu/~wsshin/pdf/shin_cv.pdf).  
 
 ## What you need to change
+In `cv.tex`:
 - Definitions (`\def`) in "Personal information" section
 - Main contents within `\begin{document} ... \end{document}`
-- If you want to include your publications, `publications.bib` file
+
+In addition, if you want to include your publications, you need to provide your own `publications.bib` file (see below for additional information).
 
 ## About `publications.bib`
 I made a great effort to list publications automatically out of a BibTeX file.
