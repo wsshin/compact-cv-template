@@ -5,10 +5,10 @@
 
 
 % About publications.bib:
-% The template generates multiple publication lists automatically out of the BibTeX file `publications.bib`.
+% The template generates multiple publication lists automatically out of the single BibTeX file `publications.bib`.
 % - The publications are automatically sorted in the reverse chronological order.  If you have 10 publications, the first publication in the list is the most recent publication and numbered 10, and the next publication in the list is the second-most recent publication and numbered 9, etc.
-% - In each bibliography item in publications.bib, add a new field named "Entrysubtype".  (If you use BibDesk on macOS, this can be done by BibDesk > Publication > Add Field...)  This field is used to show only the bibliography items with a specific "Entrysubtype" value.  For example, put "oral" as the value of "Entrysubtype" for oral presentations in conferences, and use "\printbibliography[subtype=oral]" to show only the bibliography items tagged "oral" in "Entrysubtype".  See more examples in \section{Refereed Journal Publications}, \section{Conference Oral Presentations}, \section{Conference Poster Presentations}
-% - The specific format in which each publication is shown is defined in cv_biblatex_format.tex, which you need to change in order to use a different format.
+% - Multiple publication lists can be generated.  To use this feature, add a new field named `Entrysubtype` in each bibliography item in `publications.bib`.  (If you use BibDesk on macOS, this can be done by BibDesk > Publication > Add Field...)  You can show only the bibliography items with a specific `Entrysubtype` value.  For example, put `oral` as the value of `Entrysubtype` for oral presentations in conferences, and use `\printbibliography[subtype=oral]` to show only the bibliography items tagged `oral` in `Entrysubtype`.  Assigning different `value`s to `Entrysubtype` and calling `\printbibliography[subtype=value]` multiple times with different `value`s, you can generate multiple publication lists.  See examples in `\section{Refereed Journal Publications}`, `\section{Conference Oral Presentations}`, `\section{Conference Poster Presentations}` in `cv.tex`.
+% - The specific format in which each publication is shown is defined in `cv_biblatex_format.tex`, which you need to change in order to use a different format.
 
 
 % Special instruction for creating the contents within \begin{document} ... \end{document}:
