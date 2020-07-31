@@ -2,12 +2,12 @@
 LaTeX template to create a compact curriculum vitae (CV) such as [http://www.mit.edu/~wsshin/pdf/shin_cv.pdf](http://www.mit.edu/~wsshin/pdf/shin_cv.pdf).  
 
 ## How to use
-#. Put `cv.tex`, `cv_geoemtry.tex`, `cv_biblatex_format.tex` in the same directory.  
-#. Change the followings in `cv.tex`:
+1. Put `cv.tex`, `cv_geoemtry.tex`, `cv_biblatex_format.tex` in the same directory.  
+2. Change the followings in `cv.tex`:
 - Definitions (`\def`) in "Personal information" section
 - Main contents within `\begin{document} ... \end{document}`
-#. Additionally, if you want to include your publications, you need to provide your own `publications.bib` file (see below for additional information).
-#. Finally, use `pdflatex` to process the `*.tex` files and produce `cv.pdf`.
+3. Additionally, if you want to include your publications, you need to provide your own `publications.bib` file (see below for additional information).
+4. Finally, use `pdflatex` to process the `*.tex` files and produce `cv.pdf`.
 
 ## About `publications.bib`
 The template generates multiple publication lists automatically out of the BibTeX file `publications.bib`.
