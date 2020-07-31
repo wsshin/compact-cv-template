@@ -1,0 +1,184 @@
+\usepackage{csquotes}  % context-sensitive quotation
+
+% New sorting scheme declared based on ydnt (year descending, name, title) and nymdt (name year, month, day, title) in http://tex.stackexchange.com/questions/46868/biblatex-sorting-by-date.
+\DeclareSortingScheme{ymddnt}{% year month day in decreasing order, and the name and title in ascending order
+  \sort{
+    \field{presort}
+  }
+  \sort[final]{
+    \field{sortkey}
+  }
+  \sort[direction=descending]{
+    \field[strside=left,strwidth=4]{sortyear}
+    \field[strside=left,strwidth=4]{year}
+    \literal{9999}
+  }
+  \sort[direction=descending]{
+    \field[padside=left,padwidth=2,padchar=0]{month}
+    \literal{00}
+  }
+  \sort[direction=descending]{
+    \field[padside=left,padwidth=2,padchar=0]{day}
+    \literal{00}
+  }
+  \sort{
+    \field{sortname}
+    \field{author}
+    \field{editor}
+    \field{translator}
+    \field{sorttitle}
+    \field{title}
+  }
+  \sort{
+    \field{sorttitle}
+    \field{title}
+  }
+}
+
+% When cited in the format of Last Name et. al. 20XX, do not print "n.d." (no date) when year field is empty.
+\DefineBibliographyStrings{english}{%
+	nodate = {\printfield{shortjournal}}
+}
+
+% Change field formats.
+\renewcommand*{\postnotedelim}{}
+\DeclareFieldFormat{postnote}{\addcomma\addspace#1}  % for (citation number)^(section) used in dissertation
+\DeclareFieldFormat[article]{volume}{\textbf{#1}}
+\DeclareFieldFormat{edition}{#1\addspace ed\addperiod}
+\DeclareFieldFormat{usera}{#1\addspace\printfield{url}\addspace\printfield{note}}  % note used to indicate co-first authorship
+\DeclareFieldFormat{url}{[\href{#1}{link}]}
+\DeclareFieldFormat{shortjournal}{\textsl{#1}}
+
+%%
+% Define new cite commands.
+% Below, not putting "%" at the end of each line produces extra spaces.
+%
+
+% \citejournalyear with internal hyperlink
+\DeclareCiteCommand{\citejournalyear}%
+	{\bibopenbracket\usebibmacro{prenote}}%
+	{\usebibmacro{citeindex}%
+	\printtext[bibhyperref]{%
+		\iffieldundef{shortjournal}
+			{\printfield{year}}
+			{\printfield{shortjournal}~\printfield{year}}}}% \addspace instead of ~ puts wider space
+	{\multicitedelim}%
+	{\usebibmacro{postnote}\bibclosebracket}%
+
+\DeclareCiteCommand{\citejournalyearnobracket}%
+	{\usebibmacro{prenote}}%
+	{\usebibmacro{citeindex}%
+	\printtext[bibhyperref]{%
+		\iffieldundef{shortjournal}
+			{\printfield{year}}
+			{\printfield{shortjournal}~\printfield{year}}}}% \addspace instead of ~ puts wider space
+	{\multicitedelim}%
+	{\usebibmacro{postnote}}%
+
+% % For "last name, first name" format in References
+% \DeclareNameAlias{sortname}{last-first}
+% \DeclareNameAlias{default}{last-first}
+
+% \fullcite with the full list of authors
+\newcommand*{\longfullcite}{%
+  \AtNextCite{\defcounter{maxnames}{99}}%
+  \fullcite}
+
+% Put a colon (:) and a space before pages.
+\renewcommand*{\bibpagespunct}{\addcolon\space}
+
+\renewbibmacro*{issue+date}{%
+	\iffieldundef{year}{}{\printtext[parens]{\usebibmacro{date}}}
+}
+
+% Remove "In:" from article citation
+\renewbibmacro*{in:}{%
+	\ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}
+}
+
+% Modify macro defined in /usr/local/texlive/2013/texmf-dist/tex/latex/biblatex/bbx
+\renewbibmacro*{note+pages}{%
+	\setunit{\bibpagespunct}% prevent capitalization of pp.
+	\printfield{pages}%
+	\setunit{\bibpagespunct}% prevent capicalization of art. no.
+	\printfield{usera}%
+}
+
+% Modify macro defined in /usr/local/texlive/2013/texmf-dist/tex/latex/biblatex/bbx
+\renewbibmacro*{doi+eprint+url}{%
+	% \iftoggle{bbx:doi}
+	% 	{\printfield{doi}}
+	% 	{}%
+	% \newunit\newblock
+	% \iftoggle{bbx:eprint}
+	% 	{\usebibmacro{eprint}}
+	% 	{}%
+	% \newunit\newblock
+	% \iftoggle{bbx:url}
+	% 	{\usebibmacro{url+urldate}}
+	% 	{}%
+	% \newunit% put a period and signals a new unit
+	% \printfield{note}%
+}
+
+\AtEveryBibitem{%
+	\ifboolexpr{test {\ifentrytype{article}}}
+		{\clearfield{month}%
+		\clearfield{labelmonth}}%
+		{}%
+	\clearfield{isbn}%
+	\clearfield{issn}%
+	\clearfield{doi}%
+	\clearfield{number}%
+	\clearlist{language}%
+}
+
+% Below, every line must ends with a % sign to prevent erroneous tab added in front of invocation of \fullcite{}.
+\AtEveryCitekey{%
+	\ifboolexpr{test {\ifentrytype{article}}}
+		{\clearfield{month}%
+		\clearfield{labelmonth}}%
+		{}%
+	\clearfield{isbn}%
+	\clearfield{issn}%
+	\clearfield{doi}%
+	\clearfield{number}%
+	\clearlist{language}%
+}
+
+% Put period within quotation marks around title
+\DefineBibliographyExtras{english}{%
+	\uspunctuation%
+}
+
+% Page range compression (http://tex.stackexchange.com/questions/44492/biblatex-chicago-style-page-ranges)
+\DeclareFieldFormat{pages}{\mkcomprange{#1}\addspace\printfield{url}\addspace\printfield{note}}
+
+\setcounter{mincomprange}{100}
+\setcounter{maxcomprange}{100000}
+\setcounter{mincompwidth}{10}
+
+\makeatletter
+\patchcmd{\blx@comprange@check}
+	{\blx@comprange@comp{#1}{#2}}
+	{\blx@tempcnta=#1
+		\divide\blx@tempcnta100
+		\multiply\blx@tempcnta100
+		\ifnumequal{\blx@tempcnta}{#1}
+			{\blx@range@out@value{#1\bibrangedash#2}}
+			{\blx@comprange@comp{#1}{#2}}}
+		{}{}
+\makeatother
+
+
+% Underline my name
+\DeclareNameFormat{author}{%
+	\ifthenelse{\equal{\namepartfamily}{\mylastname/}}%
+		{\underline{\ifblank{\namepartgiveni}{}{\namepartgiveni\space}\namepartfamily}}%
+		{\ifthenelse{\equal{\namepartfamily}{\mylastname/*}}%
+    		{\underline{\ifblank{\namepartgiveni}{}{\namepartgiveni\space}\mylastname/}*}%
+			{\ifblank{\namepartgiveni}{}{\namepartgiveni\space}\namepartfamily}}%
+	\ifthenelse{\value{listcount}<\value{liststop}}%
+    	{\addcomma\space}
+    	{}
+}

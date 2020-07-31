@@ -1,0 +1,188 @@
+% What you need to change:
+% - Definitions (\def) in "Personal information" section
+% - Main contents within \begin{document} ... \end{document}
+% - If you want to include your publications, "publications.bib" file
+
+
+% About publications.bib:
+% I made a great effort to list publications automatically out of a BibTeX file.
+% - The format in which each publication is shown is defined in cv_biblatex_format.tex, which you need to change in order to use a different format.
+% - The publications are automatically sorted in the reverse chronological order.  If you have 10 publications, the first publication in the list is the most recent publication and numbered 10, and the next publication in the list is the second-most recent publication and number 9, etc.
+% - In each bibliography item in publications.bib, add a new field named "Entrysubtype".  (If you use BibDesk on macOS, this can be done by BibDesk > Publication > Add Field...)  This field is used to show only the bibliography items with a specific "Entrysubtype" name.  For example, put "oral" as the value of "Entrysubtype" for oral presentations in conferences, and use "\printbibliography[subtype=oral]" to show only the bibliography items tagged "oral" in "Entrysubtype".  See more examples in \section{Refereed Journal Publications}, \section{Conference Oral Presentations}, \section{Conference Poster Presentations}
+
+
+% Special instruction for creating the contents within \begin{document} ... \end{document}:
+% In each section, the first subsection title needs to be defined in \subsectionone{...} for formatting reason.  The remaining subsection titles need to be defined in the usual \subsection{...}
+
+
+\documentclass[12pt]{article}
+
+%%
+% Personal information
+%%
+\def\myname/{My Name}
+\def\mydate/{\today}  % for specific month (e.g., September 2020), \def\mydate/{September 2020}
+\def\mywebpage/{http://my.webpage.address}
+\def\myemail/{my@email.address}
+\def\mylastname/{Shin}  % to underscore my name in publications automatically
+
+%%
+% Geometry
+%%
+\input{cv_geometry}
+
+%%
+% Bibliography 
+%%
+\usepackage[backend=biber,style=numeric,sorting=ymddnt,defernumbers=true,hyperref=true,backref=false,maxbibnames=99]{biblatex}  % maxcitenames=n: et al. for more than n authors; sorting=nyt: name, year, title; backend=biber: to use \DeclareSourcemap
+\input{cv_biblatex_format}
+\addbibresource{publications.bib}
+\nocite{*}  % touch all entries in .bib (without citing) so that all of them appear in bibliography
+
+% For numbering in descending order
+\usepackage{etaremune}
+\usepackage{calc}
+\defbibenvironment{bibliography}%
+	{\vspace{-9ex}\begin{etaremune}[topsep=0pt,parsep=0pt,partopsep=0pt,itemindent=0pt,leftmargin={\widthof{[99]}}]}% leftmagrin = margin for items excluding numbering
+	{\end{etaremune}}%
+	{\item}%
+
+% Eliminate heading "References"
+\DefineBibliographyStrings{english}{%
+	references = {},
+}
+
+%%
+% Units	
+%%
+\usepackage[group-separator={,},binary-units,per-mode=symbol]{siunitx}
+\DeclareSIUnit\year{year}
+
+%%
+% Hyperlinks (hyperref package should be loaded after most packages)
+%%
+\usepackage[dvipsnames]{xcolor}
+\usepackage[pdfusetitle,pdfpagelabels,colorlinks=true,allcolors=BrickRed,hypertexnames=true]{hyperref}  % hypertexnames should be true for the links in bibliography and index to work correctly even if the first pages are roman-numbered.
+
+% For linebreaking long URLs.
+\usepackage{url}
+\urlstyle{same}
+
+%%
+% Main text
+%%
+\begin{document}
+	\thispagestyle{firstpagestyle}  % use firstpagestyle for first page (for larger font for name and date in header)
+
+	% Section
+    \section{Contact Information}
+	My Organization \hfill \url{\mywebpage/}\\
+	Street Address \hfill \href{mailto:\myemail/}{\nolinkurl{\myemail/}}\\
+	City, State ZIP, Country
+	
+	% Section
+    \section{Education}
+	\subsectionone{Ph.D. in Area Name} (advisor: Prof.~AAA) \hfill 20XX\\
+	\textsl{My University}
+	
+	\subsection{M.S. in Area Name} \hfill 20XX\\
+	\textsl{My University}
+	
+	\subsection{B.S. in Area Name} \hfill 20XX\\
+	\textsl{My University}
+
+	% Section
+    \section{Industry Experience}
+    \subsectionone{Position 1} \hfill 20XX--20XX\\
+	\textsl{Company Name, City, Country}\\
+	Description of the experience
+	
+    \subsection{Position 2} \hfill 20XX--20XX\\
+	\textsl{Company Name, City, Country}\\
+	Description of the experience
+
+	% Section
+    \section{Academic Experience}
+	\subsectionone{Position 1} \hfill 20XX--20XX\\
+	\textsl{My Department, My University}
+
+	\subsection{Position 2} \hfill 20XX--20XX\\
+	\textsl{My Department, My University}
+
+	% Section
+	\section{Teaching Experience}
+	\subsectionone{Subject Name 1} \hfill spring 20XX\\
+	\textsl{My Department, My University}
+	\begin{itemize}
+		\item Description 1
+		\item Description 2
+		\item Description 3
+	\end{itemize}
+
+	\subsection{Subject Name 2} \hfill spring 20XX\\
+	\textsl{My Department, My University}
+	\begin{itemize}
+		\item Description 1
+		\item Description 2
+		\item Description 3
+	\end{itemize}
+
+	% Section
+	\section{Honors \& Awards} 
+	Award 1, \textsl{Awarding Organization} \hfill 20XX\\
+	Award 2, \textsl{Awarding Organization} \hfill 20XX\\
+	Award 3, \textsl{Awarding Organization} \hfill 20XX\\
+
+	% Section
+	\section{Refereed Journal Publications}
+	\subsectionone{Area 1}\hfill\\
+	\printbibliography[subtype=area1]
+
+	\subsection{Area 2}\hfill\\
+	\printbibliography[subtype=area2]
+
+	\subsection{Area 3}\hfill\\
+	\printbibliography[subtype=area3]
+
+	% Section
+	\section{Conference Oral Presentations}
+	\printbibliography[subtype=oral]
+
+	% Section
+	\section{Conference Poster Presentations}
+	\printbibliography[subtype=poster]
+
+	% Section
+	\section{References}
+	    \begin{tabular}[t]{p{0.5\textwidth}p{0.5\textwidth}}  % [t]: top-align (Without this, the section title is center-aligned vertically with table)
+		\textbf{Prof.~AAA} & \textbf{Prof.~BBB}\\
+		AAA Department\newline
+		AAA University\newline
+		Office Address\newline
+		City, State ZIP, Country\newline
+		Phone Number\newline
+		\href{mailto:aaa@university.edu}{\nolinkurl{aaa@university.edu}}
+		&
+		BBB Department\newline
+		BBB University\newline
+		Office Address\newline
+		City, State ZIP, Country\newline
+		Phone Number\newline
+		\href{mailto:bbb@university.edu}{\nolinkurl{bbb@university.edu}}\\\\\\
+
+		\textbf{Prof.~CCC} & \textbf{Prof.~DDD}\\
+		CCC Department\newline
+		CCC University\newline
+		Office Address\newline
+		City, State ZIP, Country\newline
+		Phone Number\newline
+		\href{mailto:ccc@university.edu}{\nolinkurl{cc@university.edu}}
+		&
+		DDD Department \&\newline
+		DDD University\newline
+		City, State ZIP, Country\newline
+		Phone Number\newline
+		\href{mailto:ddd@university.edu}{\nolinkurl{ddd@university.edu}}
+		
+	\end{tabular}
+\end{document}

@@ -1,0 +1,88 @@
+%!TEX root = cv.tex
+
+% These two lengths set the left margin and the space reserved for the sectional titles, which are, by design *not* part of the text block.  If you need to invade that space for a special section, you just need to decrease the left margin by '-\sectionlen' (e.g., \hspace*{-\sectionlen})
+\newlength\lmargwidth
+\setlength{\lmargwidth}{7ex}  % width left of section headings (this is also the right margin)
+
+\newlength\sectionlen
+\setlength{\sectionlen}{1.1in}  % space reserved for the section headings
+
+\newlength\itemspacelen
+\setlength{\itemspacelen}{2ex}  % vertical space between items in same section
+\newcommand*{\itemspace}{\vspace{\itemspacelen}}
+
+\newlength\secspacelen
+\setlength{\secspacelen}{3.5ex}  % vertical space between sections; used with \reallynopagebreak
+
+\newcommand*{\subsectionone}[1]{\textbf{#1}}
+
+% Set up \section and \subsection format
+\usepackage{titlesec}
+\setcounter{secnumdepth}{0}  % don't number sections or subsections
+
+\titleformat{\section}[leftmargin]
+   {\small\scshape\filright}
+   {\thesection}
+   {1em}  % horizontal separation between label (numbering) and title
+   {}
+
+\titlespacing*{\section}{\sectionlen}{\secspacelen}{0ex}  % * == no indentation for 1st line
+
+\titleformat{\subsection}[runin]  % \titleformat{command}[shape]{format}{label}{sep}
+   {\bfseries}
+   {\thesubsection}
+   {1em}
+   {}
+
+\titlespacing*{\subsection}  % * == no indentation for 1st line
+  {0em}{\itemspacelen}{1ex}
+
+\usepackage{enumitem}  % for noitemsep and nolistsep
+\setlist{nosep,leftmargin=1.5em,label=$\bullet$}  % label=$\bullet$: larger bullets
+
+% Margins: use geometry package to set margins, and refrain from setting them in fancyhdr
+\usepackage[paper=letterpaper,
+	lmargin={\dimexpr\lmargwidth +\sectionlen\relax},
+	rmargin=\lmargwidth,
+	vmargin={5ex,5ex},  % top and bottom gaps between boundaries of physical paper and text body area
+	headsep=0ex,  % gap between top of text body area and bottom of header text (not decorative header line)
+	headheight=3ex,  % gap between bottom of header text and top of header space; if too small, header text is pushed below the intended bottom of header text
+	footskip=3ex,  % gap between bottom of text body area and bottom of footer text (where page number is written); if too small, footer text is pushed below the intended bottom of footer text
+	nomarginpar,
+	% showframe  % for debugging
+	]{geometry}
+	
+
+% Hearder and footer
+\usepackage[nodayofweek]{datetime}
+\newdateformat{mydateformat}{\monthname[\THEMONTH] \THEYEAR}
+
+\usepackage{lastpage}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyheadoffset[L]{\sectionlen}  % start header text from left column
+\fancyfootoffset[L]{\sectionlen}  % start footer text from left column, thereby centering page numbers
+\lhead{ \fancyplain{}{\textbf{\myname/}} }
+\rhead{ \fancyplain{}{As of \mydateformat\mydate/} }  % for specific date (e.g., September 2015), \rhead{ \fancyplain{}{As of September 2015} }
+\cfoot{ \fancyplain{}{\thepage/\pageref*{LastPage}} }
+
+\fancypagestyle{firstpagestyle}
+{
+	\newgeometry{  % increase top margin and headsep of 1st page to align its geometry with 2nd page despite increased header font
+		lmargin={\dimexpr\lmargwidth +\sectionlen\relax},
+		rmargin=\lmargwidth,
+		vmargin={5.5ex,5ex},  % increase top margin to align page 1 and 2's first lines of text
+		headsep=1.7ex,  % increase headsep to align page 1 and 2's decorative header lines
+		headheight=3ex,
+		footskip=3ex,
+		nomarginpar
+	}	
+	\fancyhf{}
+	\fancyheadoffset[L]{\sectionlen}  % start header text from left column
+	\fancyfootoffset[L]{\sectionlen}  % start footer text from left column, thereby centering page numbers
+	\lhead{ \fancyplain{}{\Large\textbf{\myname/}} }
+	\rhead{ \fancyplain{}{\large{As of \mydateformat\mydate/}} }
+	\cfoot{ \fancyplain{}{\thepage/\pageref*{LastPage}} }
+}
