@@ -136,7 +136,15 @@
 	Award 3, \textsl{Awarding Organization} \hfill 20XX\\
 
 	% Section
-	\section{Refereed Journal Publications}
+	\section{All Publications}  % do not specify any options after \printbibliography
+	\printbibliography
+
+	% Section
+	\section{All Journal Publications}  % specify [type=article] after \printbibliography; type is standard attribute of BibTeX entry
+	\printbibliography[type=article]
+
+	% Section
+	\section{Journal Publications by Areas}  % specify [subtype=value] after \printbibliography; subtype is nonstandard attribute of BibTeX entry, specified in Entrysubtype
 	\subsectionone{Area 1}\hfill\\
 	\printbibliography[subtype=area1]
 
@@ -147,11 +155,15 @@
 	\printbibliography[subtype=area3]
 
 	% Section
-	\section{Conference Oral Presentations}
-	\printbibliography[subtype=oral]
+	\section{All Conference Presentations}  % specify [type=inproceedings] after \printbibliography; type is standard attribute of BibTeX entry
+	\printbibliography[type=inproceedings]  % [type=conference] does not work; see https://tex.stackexchange.com/questions/341852/bibtex-type-conference
 
 	% Section
-	\section{Conference Poster Presentations}
+	\section{Conference Presentations by Types}  % specify [subtype=value] after \printbibliography; subtype is nonstandard attribute of BibTeX entry, specified in Entrysubtype
+	\subsectionone{Oral Presentations}\hfill\\
+	\printbibliography[subtype=oral]
+
+	\subsection{Poster Presentations}\hfill\\
 	\printbibliography[subtype=poster]
 
 	% Section
